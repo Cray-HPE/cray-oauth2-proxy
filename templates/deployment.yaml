@@ -1,0 +1,84 @@
+{{- $root := . -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cray-oauth2-proxy.fullname" . }}-ingress
+  labels:
+{{ include "cray-oauth2-proxy.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "cray-oauth2-proxy.name" . }}-ingress
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        app: {{ template "cray-oauth2-proxy.name" . }}-ingress
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /etc/tls
+          name: server-tls
+          readOnly: true
+        - args:
+            - --provider=keycloak
+            - --login-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/auth
+            - --redeem-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/token
+            - --profile-url=https://lauth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/userinfo
+            - --validate-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/userinfo
+            - --upstream={{ .Values.upstreamUrl }}
+            - --https-address=https://0.0.0.0:8443
+            - --cookie-secure=false
+            - --pass-authorization-header=true
+            - --set-authorization-header=true
+            - --pass-access-token=true
+            - --cookie-secret=lwLQpx7rj_XmU3MkUd3YGjQ==
+            - --ssl-insecure-skip-verify=true
+            - --skip-provider-button=true
+        env:
+        - name: OAUTH2_PROXY_EMAIL_DOMAIN
+          value: "*"
+        - name: OAUTH2_PROXY_TLS_CERT_FILE
+          value: "/etc/tls/tls.crt"
+        - name: OAUTH2_PROXY_TLS_KEY_FILE
+          value: "/etc/tls/tls.key"
+        - name: OAUTH2_PROXY_PROVIDER_CA_FILE                                                   
+          value: "/etc/tls/ca.crt"  
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.keycloakClientSecret }}
+              key: client-id
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.keycloakClientSecret }}
+              key: client-secret                                                                        
+        ports:
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "2"
+      volumes:
+      - name: server-tls
+        secret:
+          defaultMode: 420
+          secretName: {{ .Values.certificateSecretName }}
+      dnsPolicy: ClusterFirst
+{{- with .Values.hostAliases }}
+      hostAliases:
+        {{- toYaml . | nindent 6 }}
+{{- end }}
+      restartPolicy: Always
