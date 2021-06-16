@@ -12,13 +12,9 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-
-
-# Everything past here is a current unknown
-
 # The Keycloak client secret includes the client ID, client secret, and
 # discovery URL. It is configured as part of keycloak_deploy role.
-keycloakClientSecret: keycloak-gatekeeper-client
+oauth2ClientSecret: keycloak-gatekeeper-client
 
 # The URL to which traffic is forwarded after authentication (and
 # authorization). This is expected to be the Istio ingress gateway.
@@ -28,19 +24,31 @@ upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
 # overridden with valid values, a single value here is used to ensure
 # the chart builds successfully (e.g., the certificate chart requires
 # at least one host to use as commonName + first SAN)
-hosts:
-- replace_me
+#hosts:
+#- replace_me
 
 # Additional /etc/hosts configuration for keycloak-gatekeeper pod(s).
 # Necessary on systems where the discovery URL in keycloakClientSecret is not
 # resolvable from the keycloak-gatekeeper pod (e.g., groot-ncn-w001).
-hostAliases: []
+#hostAliases: []
+
+# Override for running on vshasta
+hosts:
+- opa-gpm.vshasta.io
+- nexus.vshasta.io
+- grafana-istio.vshasta.io
+- jaeger-istio.vshasta.io
+- prometheus-istio.vshasta.io
+- kiali-istio.vshasta.io
+- prometheus.vshasta.io
+- alertmanager.vshasta.io
+- grafana.vshasta.io
+- vcs.vshasta.io
+- sma-grafana.vshasta.io
+- sma-kibana.vshasta.io
+- mma.vshasta.io
+
+
 
 # Certificate secretName
-certificateSecretName: "keycloak-gatekeeper-certs"
-
-# Passed as the value to the upstream-response-header-timeout option, "the timeout placed on the response header for upstream"`
-#upstreamResponseHeaderTimeout: "5m"
-
-# Passed as the value to the server-write-timeout option, "the server write timeout on the http server"
-#serverWriteTimeout: "5m"
+certificateSecretName: "oauth2-proxy-certs"
