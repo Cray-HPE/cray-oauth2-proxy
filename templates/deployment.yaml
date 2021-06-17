@@ -36,7 +36,7 @@ spec:
         - --pass-access-token=true
         - --insecure-oidc-allow-unverified-email=true
         # Workaround to get accounts without emails able to authenticate
-        - --oidc-email-claim="sub"
+        - --oidc-email-claim=sub
         - --redirect-url=https://prometheus.vshasta.io/oauth2/callback
         - --cookie-secret=lwLQpx7rj_XmU3MkUd3YGjQ=
         env:
