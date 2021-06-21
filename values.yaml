@@ -18,7 +18,7 @@ oauth2ClientSecret: keycloak-gatekeeper-client
 
 # The URL to which traffic is forwarded after authentication (and
 # authorization). This is expected to be the Istio ingress gateway.
-upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
+upstreamUrl: "http://istio-ingressgateway.istio-system.svc.cluster.local/"
 
 # The hostnames that oauth2-proxy will proxy. Hosts must be 
 # overridden with valid values, a single value here is used to ensure
@@ -39,9 +39,6 @@ certificateSecretName: "oauth2-proxy-certs"
 arguments:
 - --provider=oidc
 - --https-address=:8443
-- --cookie-secure=false
-- --ssl-insecure-skip-verify=true
-- --ssl-upstream-insecure-skip-verify=true
 - --skip-provider-button=true
 - --pass-access-token=true
 - --insecure-oidc-allow-unverified-email=true
@@ -50,3 +47,4 @@ arguments:
 - --email-domain=*
 - --tls-cert-file=/etc/tls/tls.crt
 - --tls-key-file=/etc/tls/tls.key
+- --provider-ca-file=/etc/tls/ca.pem
