@@ -27,25 +27,14 @@ spec:
           name: server-tls
           readOnly: true
         args:
-        - --provider=oidc
-        - --https-address=:8443
-        - --cookie-secure=false
-        - --ssl-insecure-skip-verify=true
-        - --ssl-upstream-insecure-skip-verify=true
-        - --skip-provider-button=true
-        - --pass-access-token=true
-        - --insecure-oidc-allow-unverified-email=true
-        # Workaround to get accounts without emails able to authenticate
-        - --oidc-email-claim=sub
-        - --redirect-url=https://prometheus.vshasta.io/oauth2/callback
-        - --cookie-secret=lwLQpx7rj_XmU3MkUd3YGjQ=
+        {{- range .Values.arguments }}
+        - {{ . }}
+        {{- end}}
         env:
-        - name: OAUTH2_PROXY_EMAIL_DOMAINS
-          value: "*"
-        - name: OAUTH2_PROXY_TLS_CERT_FILE
-          value: "/etc/tls/tls.crt"
-        - name: OAUTH2_PROXY_TLS_KEY_FILE
-          value: "/etc/tls/tls.key" 
+        - name: OAUTH2_PROXY_REDIRECT_URL
+          value: https://prometheus.vshasta.io/oauth2/callback
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: lwLQpx7rj_XmU3MkUd3YGjQ=
         - name: OAUTH2_PROXY_OIDC_ISSUER_URL
           valueFrom:
             secretKeyRef:
@@ -67,25 +56,6 @@ spec:
         - containerPort: 8443
           name: https
           protocol: TCP
-        livenessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /ping
-            port: 8443
-            scheme: HTTPS
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 5
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /ping
-            port: 8443
-            scheme: HTTPS
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
         resources:
           requests:
             memory: "20Mi"

@@ -20,17 +20,33 @@ oauth2ClientSecret: keycloak-gatekeeper-client
 # authorization). This is expected to be the Istio ingress gateway.
 upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
 
-# The hostnames that keycloak-gatekeeper will proxy. Hosts must be 
+# The hostnames that oauth2-proxy will proxy. Hosts must be 
 # overridden with valid values, a single value here is used to ensure
 # the chart builds successfully (e.g., the certificate chart requires
 # at least one host to use as commonName + first SAN)
 hosts:
 - replace_me
 
-# Additional /etc/hosts configuration for keycloak-gatekeeper pod(s).
+# Additional /etc/hosts configuration for oauth2-proxy pod(s).
 # Necessary on systems where the discovery URL in keycloakClientSecret is not
-# resolvable from the keycloak-gatekeeper pod (e.g., groot-ncn-w001).
+# resolvable from the oauth2-proxy pod (e.g., groot-ncn-w001).
 hostAliases: []
 
 # Certificate secretName
 certificateSecretName: "oauth2-proxy-certs"
+
+# The standard arguments for each oauth2-proxy pod
+arguments:
+- --provider=oidc
+- --https-address=:8443
+- --cookie-secure=false
+- --ssl-insecure-skip-verify=true
+- --ssl-upstream-insecure-skip-verify=true
+- --skip-provider-button=true
+- --pass-access-token=true
+- --insecure-oidc-allow-unverified-email=true
+# Workaround to get accounts without emails able to authenticate
+- --oidc-email-claim=sub
+- --email-domain=*
+- --tls-cert-file=/etc/tls/tls.crt
+- --tls-key-file=/etc/tls/tls.key
