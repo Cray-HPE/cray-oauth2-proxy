@@ -31,6 +31,7 @@ spec:
         - {{ . }}
         {{- end}}
         env:
+        # Holds cookie secret used to encrypt the cookie oauth2 proxy saves.
         - name: OAUTH2_PROXY_COOKIE_SECRET
           value: lwLQpx7rj_XmU3MkUd3YGjQ=
         - name: OAUTH2_PROXY_OIDC_ISSUER_URL
