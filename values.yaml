@@ -37,6 +37,7 @@ certificateSecretName: "oauth2-proxy-certs"
 
 # The standard arguments for each oauth2-proxy pod
 arguments:
+- --proxy-prefix=/oauth
 - --provider=oidc
 - --https-address=:8443
 - --skip-provider-button=true
