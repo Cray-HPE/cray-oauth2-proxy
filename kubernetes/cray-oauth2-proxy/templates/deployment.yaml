@@ -26,39 +26,30 @@ spec:
         - mountPath: /etc/tls
           name: server-tls
           readOnly: true
-        - args:
-            - --provider=keycloak
-            - --login-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/auth
-            - --redeem-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/token
-            - --profile-url=https://lauth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/userinfo
-            - --validate-url=https://auth.vshasta.io/keycloak/realms/shasta/protocol/openid-connect/userinfo
-            - --upstream={{ .Values.upstreamUrl }}
-            - --https-address=https://0.0.0.0:8443
-            - --cookie-secure=false
-            - --pass-authorization-header=true
-            - --set-authorization-header=true
-            - --pass-access-token=true
-            - --cookie-secret=lwLQpx7rj_XmU3MkUd3YGjQ==
-            - --ssl-insecure-skip-verify=true
-            - --skip-provider-button=true
+        args:
+        {{- range .Values.arguments }}
+        - {{ . }}
+        {{- end}}
         env:
-        - name: OAUTH2_PROXY_EMAIL_DOMAIN
-          value: "*"
-        - name: OAUTH2_PROXY_TLS_CERT_FILE
-          value: "/etc/tls/tls.crt"
-        - name: OAUTH2_PROXY_TLS_KEY_FILE
-          value: "/etc/tls/tls.key"
-        - name: OAUTH2_PROXY_PROVIDER_CA_FILE                                                   
-          value: "/etc/tls/ca.crt"  
+        # Holds cookie secret used to encrypt the cookie oauth2 proxy saves.
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: lwLQpx7rj_XmU3MkUd3YGjQ=
+        - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.oauth2ClientSecret }}
+              key: discovery-url
+        - name: OAUTH2_PROXY_UPSTREAMS
+          value: {{ .Values.upstreamUrl }}
         - name: OAUTH2_PROXY_CLIENT_ID
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.keycloakClientSecret }}
+              name: {{ .Values.oauth2ClientSecret }}
               key: client-id
         - name: OAUTH2_PROXY_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.keycloakClientSecret }}
+              name: {{ .Values.oauth2ClientSecret }}
               key: client-secret                                                                        
         ports:
         - containerPort: 8443

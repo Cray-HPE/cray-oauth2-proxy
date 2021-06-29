@@ -12,35 +12,40 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-
-
-# Everything past here is a current unknown
-
 # The Keycloak client secret includes the client ID, client secret, and
 # discovery URL. It is configured as part of keycloak_deploy role.
-keycloakClientSecret: keycloak-gatekeeper-client
+oauth2ClientSecret: keycloak-gatekeeper-client
 
 # The URL to which traffic is forwarded after authentication (and
 # authorization). This is expected to be the Istio ingress gateway.
-upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
+upstreamUrl: "http://istio-ingressgateway.istio-system.svc.cluster.local/"
 
-# The hostnames that keycloak-gatekeeper will proxy. Hosts must be 
+# The hostnames that oauth2-proxy will proxy. Hosts must be 
 # overridden with valid values, a single value here is used to ensure
 # the chart builds successfully (e.g., the certificate chart requires
 # at least one host to use as commonName + first SAN)
 hosts:
 - replace_me
 
-# Additional /etc/hosts configuration for keycloak-gatekeeper pod(s).
+# Additional /etc/hosts configuration for oauth2-proxy pod(s).
 # Necessary on systems where the discovery URL in keycloakClientSecret is not
-# resolvable from the keycloak-gatekeeper pod (e.g., groot-ncn-w001).
+# resolvable from the oauth2-proxy pod (e.g., groot-ncn-w001).
 hostAliases: []
 
 # Certificate secretName
-certificateSecretName: "keycloak-gatekeeper-certs"
+certificateSecretName: "oauth2-proxy-certs"
 
-# Passed as the value to the upstream-response-header-timeout option, "the timeout placed on the response header for upstream"`
-#upstreamResponseHeaderTimeout: "5m"
-
-# Passed as the value to the server-write-timeout option, "the server write timeout on the http server"
-#serverWriteTimeout: "5m"
+# The standard arguments for each oauth2-proxy pod
+arguments:
+- --proxy-prefix=/oauth
+- --provider=oidc
+- --https-address=:8443
+- --skip-provider-button=true
+- --pass-access-token=true
+- --insecure-oidc-allow-unverified-email=true
+# Workaround to get accounts without emails able to authenticate
+- --oidc-email-claim=sub
+- --email-domain=*
+- --tls-cert-file=/etc/tls/tls.crt
+- --tls-key-file=/etc/tls/tls.key
+- --provider-ca-file=/etc/tls/ca.crt
