@@ -32,7 +32,10 @@ pipeline {
         steps {
             script {
                 pushToGithub(
-                    githubRepo: "Cray-HPE/cray-oauth2-proxy",
+                    githubRepo: "Cray-HPE/oauth2-proxy",
+                    pemSecretId: "githubapp-stash-sync",
+                    githubAppId: "91129",
+                    githubAppInstallationId: "13313749"
                 )
             }
         }
