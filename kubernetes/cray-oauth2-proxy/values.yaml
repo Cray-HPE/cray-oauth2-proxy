@@ -14,7 +14,7 @@ fullnameOverride: ""
 
 # The Keycloak client secret includes the client ID, client secret, and
 # discovery URL. It is configured as part of keycloak_deploy role.
-oauth2ClientSecret: keycloak-gatekeeper-client
+oauth2ClientSecret: oauth2-proxy-client
 
 # The URL to which traffic is forwarded after authentication (and
 # authorization). This is expected to be the Istio ingress gateway.
