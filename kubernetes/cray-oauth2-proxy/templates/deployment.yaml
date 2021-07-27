@@ -31,6 +31,9 @@ spec:
         - {{ . }}
         {{- end}}
         env:
+        # Allows go http proxy to use the certs in etc/tls as root certs
+        - name: SSL_CERT_DIR
+          value: '/etc/ssl:/etc/tls'
         # Holds cookie secret used to encrypt the cookie oauth2 proxy saves.
         - name: OAUTH2_PROXY_COOKIE_SECRET
           valueFrom: 
