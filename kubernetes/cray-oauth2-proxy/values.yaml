@@ -18,7 +18,7 @@ oauth2ClientSecret: oauth2-proxy-client
 
 # The URL to which traffic is forwarded after authentication (and
 # authorization). This is expected to be the Istio ingress gateway.
-upstreamUrl: "http://istio-ingressgateway.istio-system.svc.cluster.local/"
+upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
 
 # The hostnames that oauth2-proxy will proxy. Hosts must be 
 # overridden with valid values, a single value here is used to ensure
