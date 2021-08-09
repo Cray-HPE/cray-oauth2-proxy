@@ -11,6 +11,7 @@ image:
 
 nameOverride: ""
 fullnameOverride: ""
+priorityClassName: csm-high-priority-service
 
 # The Keycloak client secret includes the client ID, client secret, and
 # discovery URL. It is configured as part of keycloak_deploy role.

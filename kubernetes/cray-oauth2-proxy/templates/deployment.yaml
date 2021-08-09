@@ -78,4 +78,7 @@ spec:
       hostAliases:
         {{- toYaml . | nindent 6 }}
 {{- end }}
+{{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+{{- end }}
       restartPolicy: Always
