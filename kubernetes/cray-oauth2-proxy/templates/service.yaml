@@ -6,7 +6,7 @@ metadata:
   labels:
 {{ include "cray-oauth2-proxy.labels" . | indent 4 }}
   annotations:
-    metallb.universe.tf/address-pool: customer-access
+    metallb.universe.tf/address-pool: {{ .Values.metalLbAddressPool }}
     external-dns.alpha.kubernetes.io/hostname: {{ range $idx, $val := .Values.hosts }}{{ if gt $idx 0 }},{{ end }}{{ $val }}{{ end }}
 spec:
   type: LoadBalancer

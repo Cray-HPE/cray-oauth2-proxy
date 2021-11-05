@@ -21,6 +21,9 @@ oauth2ClientSecret: oauth2-proxy-client
 # authorization). This is expected to be the Istio ingress gateway.
 upstreamUrl: "https://istio-ingressgateway.istio-system.svc.cluster.local/"
 
+# The address pool that will be used.
+metalLbAddressPool: customer-management
+
 # The hostnames that oauth2-proxy will proxy. Hosts must be 
 # overridden with valid values, a single value here is used to ensure
 # the chart builds successfully (e.g., the certificate chart requires
