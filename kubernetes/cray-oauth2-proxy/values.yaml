@@ -13,8 +13,12 @@ nameOverride: ""
 fullnameOverride: ""
 priorityClassName: csm-high-priority-service
 
+# The OAuth2-Proxy Secret includes the cookie-secret. This is created
+# by a Sealed Secret.
+oauth2ProxySecret: cray-oauth2-proxy
+
 # The Keycloak client secret includes the client ID, client secret, and
-# discovery URL. It is configured as part of keycloak_deploy role.
+# discovery URL. It is created by the keycloak-setup tool.
 oauth2ClientSecret: oauth2-proxy-client
 
 # The URL to which traffic is forwarded after authentication (and
@@ -53,3 +57,6 @@ arguments:
 - --tls-cert-file=/etc/tls/tls.crt
 - --tls-key-file=/etc/tls/tls.key
 - --provider-ca-file=/etc/tls/ca.crt
+
+# A list of sealedSecrets passed in to be deployed.
+sealedSecrets: []
