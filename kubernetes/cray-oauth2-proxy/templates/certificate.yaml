@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  name: oauth2-proxy
+  name: {{ template "cray-oauth2-proxy.fullname" . }}
 spec:
   secretName: {{ .Values.certificateSecretName }}
   issuerRef:
