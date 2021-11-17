@@ -14,7 +14,10 @@ pipeline {
         NAME = "cray-oauth2-proxy"
         DESCRIPTION = "Deploys the Oauth2 Proxy ingress to the Cray system."
         IS_STABLE = getBuildIsStable()
-        CHART_VERSION = getChartVersion(name: env.NAME, isStable: env.IS_STABLE)
+        CHART_NAME_1 = "cray-oauth2-proxy"
+        CHART_NAME_2 = "cray-oauth2-proxies"
+        CHART_VERSION_1 = getChartVersion(name: env.CHART_NAME_1, isStable: env.IS_STABLE)
+        CHART_VERSION_2 = getChartVersion(name: env.CHART_NAME_2, isStable: env.IS_STABLE)
     }
 
     stages {
@@ -22,7 +25,7 @@ pipeline {
             parallel {
                 stage('Chart') {
                     steps {
-                        sh "make chart"
+                        sh "make charts"
                     }
                 }
             }
