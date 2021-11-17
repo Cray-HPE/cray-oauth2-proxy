@@ -1,0 +1,18 @@
+
+customer-management:
+  metalLbAddressPool: customer-management
+  certificateSecretName: cray-oauth2-proxies-customer-management
+  oauth2ProxySecret: cray-oauth2-proxy-customer-management
+  oauth2ClientSecret: oauth2-proxy-customer-management-client
+
+customer-access:
+  metalLbAddressPool: customer-access
+  certificateSecretName: cray-oauth2-proxies-customer-access
+  oauth2ProxySecret: cray-oauth2-proxy-customer-access
+  oauth2ClientSecret: oauth2-proxy-customer-access-client
+
+customer-high-speed:
+  metalLbAddressPool: customer-high-speed
+  certificateSecretName: cray-oauth2-proxies-customer-high-speed
+  oauth2ProxySecret: cray-oauth2-proxy-customer-high-speed
+  oauth2ClientSecret: oauth2-proxy-customer-high-speed-client
