@@ -1,17 +1,17 @@
 apiVersion: v2
 description: Deploys the different instances of cray-oauth2-proxy that are needed on a Cray system.
 name: cray-oauth2-proxies
-version: 0.1.2
+version: 0.2.0
 dependencies:
 - name: cray-oauth2-proxy
-  version: "0.3.2"
+  version: "0.4.0"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-management
 - name: cray-oauth2-proxy
-  version: "0.3.2"
+  version: "0.4.0"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-access
 - name: cray-oauth2-proxy
-  version: "0.3.2"
+  version: "0.4.0"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-high-speed
