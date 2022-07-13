@@ -29,7 +29,7 @@ replicaCount: 1
 
 image:
   repository: artifactory.algol60.net/csm-docker/stable/quay.io/oauth2-proxy/oauth2-proxy
-  tag: v7.2.1
+  tag: v7.3.0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
