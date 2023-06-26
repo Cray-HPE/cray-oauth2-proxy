@@ -24,7 +24,7 @@
 apiVersion: v2
 description: Deploys the different instances of cray-oauth2-proxy that are needed on a Cray system.
 name: cray-oauth2-proxies
-version: 0.3.0
+version: 0.3.1
 dependencies:
 - name: cray-oauth2-proxy
   version: "0.5.0"
