@@ -4,6 +4,7 @@ customer-management:
   certificateSecretName: cray-oauth2-proxies-customer-management
   oauth2ProxySecret: cray-oauth2-proxy-customer-management
   oauth2ClientSecret: oauth2-proxy-customer-management-client
+  upstreamUrl: "https://istio-ingressgateway-cmn.istio-system.svc.cluster.local/"
 
 customer-access:
   metalLbAddressPool: customer-access
