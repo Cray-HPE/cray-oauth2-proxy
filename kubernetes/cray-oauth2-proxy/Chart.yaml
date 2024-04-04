@@ -25,4 +25,4 @@ apiVersion: v1
 appVersion: "7.3.0"
 description: A Helm chart for Kubernetes
 name: cray-oauth2-proxy
-version: 0.5.0
+version: 0.6.0
