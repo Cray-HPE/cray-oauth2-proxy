@@ -27,14 +27,14 @@ name: cray-oauth2-proxies
 version: 0.4.0
 dependencies:
 - name: cray-oauth2-proxy
-  version: "0.4.0-20240418174954+61f3e4d"
+  version: "0.6.0-20240418174954+61f3e4d"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-management
 - name: cray-oauth2-proxy
-  version: "0.4.0-20240418174954+61f3e4d"
+  version: "0.6.0-20240418174954+61f3e4d"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-access
 - name: cray-oauth2-proxy
-  version: "0.4.0-20240418174954+61f3e4d"
+  version: "0.6.0-20240418174954+61f3e4d"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-high-speed
