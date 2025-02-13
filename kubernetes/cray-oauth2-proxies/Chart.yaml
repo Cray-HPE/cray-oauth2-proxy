@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2021-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2021-2025 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -24,17 +24,17 @@
 apiVersion: v2
 description: Deploys the different instances of cray-oauth2-proxy that are needed on a Cray system.
 name: cray-oauth2-proxies
-version: 0.4.0
+version: 0.4.1
 dependencies:
 - name: cray-oauth2-proxy
-  version: "0.6.0"
+  version: "0.6.1"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-management
 - name: cray-oauth2-proxy
-  version: "0.6.0"
+  version: "0.6.1"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-access
 - name: cray-oauth2-proxy
-  version: "0.6.0"
+  version: "0.6.1"
   repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts"
   alias: customer-high-speed
